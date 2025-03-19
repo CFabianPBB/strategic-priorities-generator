@@ -13,7 +13,8 @@ function App() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await fetch("http://127.0.0.1:8000/generate", {
+      const apiUrl = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+      const response = await fetch(`${apiUrl}/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ org_name: orgName, org_website: orgWebsite }),
@@ -58,10 +59,10 @@ function App() {
             
             {/* Download buttons */}
             <div className="download-buttons">
-              <a href="http://127.0.0.1:8000/download/word" className="download-btn">
+              <a href={`${apiUrl}/download/word`} className="download-btn">
                 Download as Word
               </a>
-              <a href="http://127.0.0.1:8000/download/excel" className="download-btn">
+              <a href={`${apiUrl}/download/excel`} className="download-btn">
                 Download as Excel
               </a>
             </div>
