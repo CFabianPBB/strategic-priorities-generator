@@ -7,6 +7,7 @@ from pydantic import BaseModel
 import tempfile
 from datetime import datetime
 import json
+import httpx
 
 # Add the current directory to the Python path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -23,7 +24,10 @@ try:
     
     if openai_api_key:
         from openai import OpenAI
-        client = OpenAI(api_key=openai_api_key)
+        client = OpenAI(
+            api_key=openai_api_key,
+            http_client=httpx.Client()
+        )
         has_openai = True
         print("OpenAI client initialized successfully")
     else:
