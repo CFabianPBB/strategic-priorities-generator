@@ -8,12 +8,14 @@ function App() {
   const [orgWebsite, setOrgWebsite] = useState("");
   const [priorities, setPriorities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  
+  // Define apiUrl at the component level so it's available throughout the component
+  const apiUrl = import.meta.env.VITE_API_URL || "https://strategic-priorities-backend.onrender.com";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
       const response = await fetch(`${apiUrl}/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -77,6 +79,11 @@ function App() {
                   {priority.definitions.map((def, i) => (
                     <li key={i} className="definition-item">
                       <strong>{def.title}</strong> {def.description}
+                      {def.source && (
+                        <div className="source-info">
+                          <small>Source: {def.source}</small>
+                        </div>
+                      )}
                     </li>
                   ))}
                 </ul>
